@@ -1,3 +1,6 @@
+mod bubblesort;
+
+
 pub trait Sorter {
     fn sort<T>(slice: &mut [T]) 
     where 
@@ -12,7 +15,6 @@ pub fn sort<T,S>(slice: &mut [T])
     S::sort(slice)
 }
 
-mod bubblesort;
 pub fn add(left: usize, right: usize) -> usize {
     left + right
 }
@@ -21,9 +23,19 @@ pub fn add(left: usize, right: usize) -> usize {
 mod tests {
     use super::*;
 
+    struct StdSorter;
+    impl Sorter for StdSorter{
+        fn sort<T>(slice: &mut [T]) 
+            where 
+                T: Ord {
+            slice.sort();
+        }
+    }
+
     #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    fn std_works() {
+        let mut things = vec![4,2,3,1];
+        sort::<_,StdSorter>(&mut things);
+        assert_eq!(things,&[1,2,3,4]);
     }
 }
