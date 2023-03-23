@@ -1,4 +1,4 @@
-use super::Sorter;
+use crate::Sorter;
 
 pub struct BubbleSort;
 
